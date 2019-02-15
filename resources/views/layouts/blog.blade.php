@@ -73,7 +73,7 @@
 				padding-bottom: 15px;
 			}
 			.section-header h4 {
-				border-bottom: 5px solid #7f0011;
+				/*border-bottom: 5px solid #7f0011;*/
 				display: inline;
 				margin-bottom: -2px;
 				padding-bottom: 13px;
