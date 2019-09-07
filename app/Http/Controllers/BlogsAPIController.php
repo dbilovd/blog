@@ -12,12 +12,23 @@ class BlogsAPIController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = WinkPost::with('tags')
-            ->live()
+        $limit = $request->has('limit') ? $request->get('limit') : 3;
+        $tags = $request->has('tags') ? $request->get('tags') : false;
+
+        $fetchPosts = WinkPost::with('tags');
+
+        if ($tags) {
+            // dd($tags);
+            $fetchPosts = $fetchPosts->whereHas('tags', function ($query) use ($tags) {
+                $query->whereIn('slug', $tags);
+            });
+        }
+
+        $posts = $fetchPosts->live()
             ->orderBy('publish_date', 'DESC')
-            ->limit(3)
+            ->limit($limit)
             ->get();
 
         return response()->json([
