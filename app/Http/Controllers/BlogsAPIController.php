@@ -20,7 +20,6 @@ class BlogsAPIController extends Controller
         $fetchPosts = WinkPost::with('tags');
 
         if ($tags) {
-            // dd($tags);
             $fetchPosts = $fetchPosts->whereHas('tags', function ($query) use ($tags) {
                 $query->whereIn('slug', $tags);
             });
